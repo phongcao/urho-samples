@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using Windows.ApplicationModel.Core;
 using Urho;
 using Urho.Gui;
-using Urho.SharpReality;
 using Urho.Physics;
-using Urho.Resources;
+using Urho.SharpReality;
+using Windows.ApplicationModel.Core;
 
 namespace Physics
 {
-	internal class Program
+    internal class Program
 	{
 		[MTAThread]
 		static void Main() => CoreApplication.Run(
@@ -59,6 +58,7 @@ namespace Physics
 			// Model and Physics for the bucket
 			var bucketModel = bucketNode.CreateComponent<StaticModel>();
 			bucketMaterial = Material.FromColor(validPositionColor);
+            bucketMaterial.VertexShaderDefines += "STEREO_INSTANCING ";
 			bucketModel.Model = ResourceCache.GetModel("Models/bucket.mdl");
 			bucketModel.SetMaterial(bucketMaterial);
 			bucketModel.ViewMask = 0x80000000; //hide from raycasts
@@ -69,6 +69,7 @@ namespace Physics
 			// Material for spatial surfaces
 			spatialMaterial = new Material();
 			spatialMaterial.SetTechnique(0, CoreAssets.Techniques.NoTextureUnlitVCol, 1, 1);
+            spatialMaterial.VertexShaderDefines += "STEREO_INSTANCING ";
 
 			// make sure 'spatialMapping' capabilaty is enabled in the app manifest.
 			var spatialMappingAllowed = await StartSpatialMapping(new Vector3(50, 50, 10), 1200);
@@ -124,7 +125,9 @@ namespace Physics
 
 			var ball = ballNode.CreateComponent<StaticModel>();
 			ball.Model = CoreAssets.Models.Sphere;
-			ball.SetMaterial(Material.FromColor(Randoms.NextColor()));
+            var ballMat = Material.FromColor(Randoms.NextColor());
+            ballMat.VertexShaderDefines += "STEREO_INSTANCING ";
+            ball.SetMaterial(ballMat);
 			ball.ViewMask = 0x80000000; //hide from raycasts
 
 			var ballRigidBody = ballNode.CreateComponent<RigidBody>();

@@ -46,19 +46,23 @@ void VS(float4 iPos : POSITION,
 		float3 iNormal : NORMAL,
 		float2 iTexCoord : TEXCOORD0,
 		float4 iTangent : TANGENT,
+		uint instId : SV_InstanceID,
 	out float4 oTexCoord : TEXCOORD0,
 	out float4 oTangent : TEXCOORD3,
 	out float3 oNormal : TEXCOORD1,
 	out float4 oWorldPos : TEXCOORD2,
 	out float4 oScreenPos : TEXCOORD5,
-	out float4 oPos : OUTPOSITION)
+	out float4 oPos : OUTPOSITION,
+	out uint rtvId : SV_RenderTargetArrayIndex)
 {
 	float3 worldPos = GetWorldPos(iModelMatrix);
-	oPos = GetClipPos(worldPos);
+	int idx = instId % 2;
+	oPos = GetStereoClipPos(idx, worldPos);
 	oNormal = GetWorldNormal(iModelMatrix);
 	oWorldPos = float4(worldPos, GetDepth(oPos));
 	float3 tangent = GetWorldTangent(iModelMatrix);
 	float3 bitangent = cross(tangent, oNormal) * iTangent.w;
 	oTexCoord = float4(GetTexCoord(iTexCoord), bitangent.xy);
 	oTangent = float4(tangent, bitangent.z);
+	rtvId = idx;
 }

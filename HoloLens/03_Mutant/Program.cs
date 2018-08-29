@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Windows.ApplicationModel.Core;
 using Urho;
 using Urho.Actions;
 using Urho.SharpReality;
+using Windows.ApplicationModel.Core;
 
 namespace Mutant
 {
-	internal class Program
+    internal class Program
 	{
 		[MTAThread]
 		static void Main() => CoreApplication.Run(
@@ -49,7 +49,9 @@ namespace Mutant
 			var mutant = mutantNode.CreateComponent<AnimatedModel>();
 
 			mutant.Model = ResourceCache.GetModel("Models/Mutant.mdl");
-			mutant.SetMaterial(ResourceCache.GetMaterial("Materials/mutant_M.xml"));
+            var mat = ResourceCache.GetMaterial("Materials/mutant_M.xml");
+            mat.VertexShaderDefines += "STEREO_INSTANCING ";
+            mutant.SetMaterial(mat);
 			animation = mutantNode.CreateComponent<AnimationController>();
 			PlayAnimation(IdleAni);
 

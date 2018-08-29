@@ -1,13 +1,13 @@
 ﻿using System;
-using Windows.ApplicationModel.Core;
 using Urho;
 using Urho.Actions;
 using Urho.SharpReality;
-using Urho.Shapes;
+using Windows.ApplicationModel.Core;
+using Sphere = Urho.Shapes.Sphere;
 
 namespace HelloWorld
 {
-	internal class Program
+    internal class Program
 	{
 		[MTAThread]
 		static void Main() => CoreApplication.Run(
@@ -35,14 +35,18 @@ namespace HelloWorld
 			var earth = earthNode.CreateComponent<Sphere>();
 			// Materials are usually more complicated than just textures, but for such
 			// simple cases we can use quick FromImage method to create a material from an image.
-			earth.SetMaterial(Material.FromImage("Textures/Earth.jpg"));
+            var earthMat = Material.FromImage("Textures/Earth.jpg");
+            earthMat.VertexShaderDefines += "STEREO_INSTANCING ";
+            earth.SetMaterial(earthMat);
 
 			// Same steps for the Moon
 			var moonNode = earthNode.CreateChild();
 			moonNode.SetScale(0.27f); // Relative size of the Moon is 1738.1km/6378.1km
 			moonNode.Position = new Vector3(1.2f, 0, 0);
 			var moon = moonNode.CreateComponent<Sphere>();
-			moon.SetMaterial(Material.FromImage("Textures/Moon.jpg"));
+            var moonMat = Material.FromImage("Textures/Moon.jpg");
+            moonMat.VertexShaderDefines += "STEREO_INSTANCING ";
+            moon.SetMaterial(moonMat);
 
 			// Run a an action to spin the Earth (5 degrees per second)
 			earthNode.RunActions(new RepeatForever(new RotateBy(duration: 1f, deltaAngleX: 0, deltaAngleY: -5, deltaAngleZ: 0)));

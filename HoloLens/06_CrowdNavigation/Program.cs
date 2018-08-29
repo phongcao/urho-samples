@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Windows.ApplicationModel.Core;
 using Urho;
-using Urho.SharpReality;
 using Urho.Navigation;
 using Urho.Shapes;
+using Urho.SharpReality;
+using Windows.ApplicationModel.Core;
 
 namespace CrowdNavigation
 {
-	internal class Program
+    internal class Program
 	{
 		[MTAThread]
 		static void Main() => CoreApplication.Run(new UrhoAppViewSource<CrowdApp>(new ApplicationOptions("Data")));
@@ -53,6 +53,7 @@ namespace CrowdNavigation
 			// Material for spatial surfaces
 			spatialMaterial = new Material();
 			spatialMaterial.SetTechnique(0, CoreAssets.Techniques.NoTextureUnlitVCol, 1, 1);
+            spatialMaterial.VertexShaderDefines += "STEREO_INSTANCING ";
 
 			DirectionalLight.Brightness += 0.3f;
 
@@ -134,7 +135,9 @@ namespace CrowdNavigation
 			
 			modelObject.CastShadows = true;
 			modelObject.Model = ResourceCache.GetModel("Models/Mutant.mdl");
-			modelObject.SetMaterial(ResourceCache.GetMaterial("Materials/mutant_M.xml"));
+            var mat = ResourceCache.GetMaterial("Materials/mutant_M.xml");
+            mat.VertexShaderDefines += "STEREO_INSTANCING ";
+            modelObject.SetMaterial(mat);
 			mutantNode.CreateComponent<AnimationController>().Play(IdleAnimation, 0, true, 0.2f);
 
 			// Create the CrowdAgent
@@ -167,7 +170,13 @@ namespace CrowdNavigation
 				surfaceIsValid = false;
 				positionSelectorModel.Color = invalidPositionColor;
 			}
-		}
+
+            var mat = positionSelectorModel.GetMaterial();
+            if (!mat.VertexShaderDefines.Contains("STEREO_INSTANCING "))
+            {
+                mat.VertexShaderDefines += "STEREO_INSTANCING ";
+            }
+        }
 
 		public override void OnGestureTapped()
 		{

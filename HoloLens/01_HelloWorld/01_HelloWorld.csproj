@@ -42,6 +42,9 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="..\CoreData.pak">
+      <Link>CoreData.pak</Link>
+    </Content>
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +57,9 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\Libraries\SharpReality\Win32\UrhoSharp.SharpReality\mono-holourho.dll">
+      <Link>mono-holourho.dll</Link>
+    </Content>
     <Content Include="Data\Textures\Earth.jpg" />
     <Content Include="Data\Textures\Moon.jpg" />
     <Content Include="Properties\Default.rd.xml" />
@@ -67,7 +73,11 @@
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="Urho">
+      <HintPath>..\Libraries\SharpReality\Urho.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

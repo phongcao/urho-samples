@@ -42,7 +42,13 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="..\Libraries\SharpReality\Win32\UrhoSharp.SharpReality\mono-holourho.dll">
+      <Link>mono-holourho.dll</Link>
+    </Content>
     <Content Include="Data\Models\bucket.mdl" />
+    <Content Include="..\CoreData.pak">
+      <Link>CoreData.pak</Link>
+    </Content>
     <None Include="Data\Models\bucket.blend" />
     <None Include="project.json" />
   </ItemGroup>
@@ -66,6 +72,11 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Urho">
+      <HintPath>..\Libraries\SharpReality\Urho.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Windows.ApplicationModel.Core;
 using Urho;
 using Urho.Actions;
 using Urho.SharpReality;
+using Windows.ApplicationModel.Core;
 
 namespace SpatialMapping
 {
-	internal class Program
+    internal class Program
 	{
 		[MTAThread]
 		static void Main() => CoreApplication.Run(new UrhoAppViewSource<SpatialMappingApp>());
@@ -88,6 +88,7 @@ namespace SpatialMapping
 			{
 				startColor = Color.Blue;
 				mat = Material.FromColor(endColor);
+                mat.VertexShaderDefines += "STEREO_INSTANCING ";
 				staticModel.SetMaterial(mat);
 			}
 			else

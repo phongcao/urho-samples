@@ -1,12 +1,11 @@
 ﻿using System;
 using Urho;
 using Urho.Actions;
-using Urho.Resources;
 using Urho.Shapes;
 
 namespace CognitiveServices
 {
-	public class BusyIndicator : Component
+    public class BusyIndicator : Component
 	{
 		bool isBusy;
 
@@ -33,6 +32,7 @@ namespace CognitiveServices
 
 			var torus = node.CreateComponent<Torus>();
 			torus.Color = Color.Cyan;
+            torus.GetMaterial().VertexShaderDefines += "STEREO_INSTANCING ";
 			node.Rotation = new Quaternion(90, 0, 0);
 			node.RunActions(new RepeatForever(
 				new EaseBounceOut(new RotateBy(0.9f, 180, 0, 0)),

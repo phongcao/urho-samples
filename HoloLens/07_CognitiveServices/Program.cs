@@ -1,25 +1,25 @@
-﻿using System;
+﻿using Microsoft.ProjectOxford.Vision;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Urho;
+using Urho.Actions;
+using Urho.Resources;
+using Urho.Shapes;
+using Urho.SharpReality;
+using Urho.Urho2D;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation.Collections;
 using Windows.Media.Capture;
 using Windows.Media.Effects;
 using Windows.Media.MediaProperties;
 using Windows.Storage.Streams;
-using Microsoft.ProjectOxford.Vision;
-using Urho;
-using Urho.Actions;
-using Urho.SharpReality;
-using Urho.Resources;
-using Urho.Shapes;
-using Urho.Urho2D;
 
 namespace CognitiveServices
 {
-	internal class Program
+    internal class Program
 	{
 		[MTAThread]
 		static void Main() => CoreApplication.Run(new UrhoAppViewSource<CognitiveServicesApp>());
@@ -145,6 +145,7 @@ namespace CognitiveServices
 						var material = new Material();
 						material.SetTechnique(0, CoreAssets.Techniques.Diff, 0, 0);
 						material.SetTexture(TextureUnit.Diffuse, texture);
+                        material.VertexShaderDefines += "STEREO_INSTANCING ";
 
 						var box = child.CreateComponent<Box>();
 						box.SetMaterial(material);

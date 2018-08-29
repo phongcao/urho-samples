@@ -1,13 +1,10 @@
-{
+﻿{
   "dependencies": {
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.*",
-    "UrhoSharp.SharpReality": "1.8.71"
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.*"
   },
-
-	"frameworks": {
-		"uap10.0": { }
-	},
-
+  "frameworks": {
+    "uap10.0.10586": {}
+  },
   "runtimes": {
     "win10-x86": {},
     "win10-x86-aot": {},

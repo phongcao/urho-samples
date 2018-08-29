@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Diagnostics;
-using Windows.ApplicationModel.Core;
 using Urho;
 using Urho.Actions;
-using Urho.SharpReality;
-using Urho.Shapes;
 using Urho.Resources;
+using Urho.SharpReality;
+using Windows.ApplicationModel.Core;
+using Sphere = Urho.Shapes.Sphere;
 
 namespace _07_HelloWorldWithCustomShaders
 {
-	/// <summary>
-	/// Windows Holographic application using SharpDX.
-	/// </summary>
-	internal class Program
+    /// <summary>
+    /// Windows Holographic application using SharpDX.
+    /// </summary>
+    internal class Program
 	{
 		/// <summary>
 		/// Defines the entry point of the application.
@@ -50,13 +50,16 @@ namespace _07_HelloWorldWithCustomShaders
 
 			var earth = earthNode.CreateComponent<Sphere>();
 			earthMaterial = ResourceCache.GetMaterial("Materials/Earth.xml");
+            earthMaterial.VertexShaderDefines += "STEREO_INSTANCING ";
 			earth.SetMaterial(earthMaterial);
 
 			var moonNode = earthNode.CreateChild();
 			moonNode.SetScale(0.27f);
 			moonNode.Position = new Vector3(1.2f, 0, 0);
 			var moon = moonNode.CreateComponent<Sphere>();
-			moon.SetMaterial(ResourceCache.GetMaterial("Materials/Moon.xml"));
+            var moonMat = Material.FromImage("Textures/Moon.jpg");
+            moonMat.VertexShaderDefines += "STEREO_INSTANCING ";
+            moon.SetMaterial(moonMat);
 
 			// HolographicDisplay api is available in >=10.0.15063
 			// var display = Windows.Graphics.Holographic.HolographicDisplay.GetDefault();
